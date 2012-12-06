@@ -1,0 +1,41 @@
+setup = python setup.py
+setup2 = python2 setup.py
+
+build none: phony
+
+rule clean
+    command = rm -fr build/ dist/ *.egg-info/
+
+rule build
+    command = $setup build
+
+rule sdist
+    command = ($setup sdist; $setup2 sdist)
+
+rule bdist
+    command = ($setup bdist; $setup2 bdist)
+
+rule bdist_egg
+    command = ($setup bdist_egg; $setup2 bdist_egg)
+
+rule install
+    command = $setup install
+
+rule test
+    command = $setup test -s tests
+
+rule release
+    command = (zenity --warning; $setup sdist bdist_egg upload; $setup2 sdist bdist_egg upload)
+
+build clean: clean
+build build: build
+build sdist: sdist
+build bdist: bdist
+build bdist_egg: bdist_egg
+build install: install
+build test: test
+build release: release
+
+
+
+default sdist bdist bdist_egg
