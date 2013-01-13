@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Python-romkan by soimort</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/soimort/python-romkan">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/soimort/python-romkan/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/soimort/python-romkan/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Python-romkan</h1>
+          <p>A Romaji/Kana conversion library for Python</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/soimort">soimort</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>python-romkan</h1>
+
+<p><code>python-romkan &lt;https://github.com/soimort/python-romkan&gt;</code>_ is a Romaji/Kana conversion library for Python, which is used to convert a Japanese Romaji (ローマ字) string to a Japanese Kana (仮名) string or vice versa.</p>
+
+<p>It is the Pythonic port of <code>Ruby/Romkan &lt;http://0xcc.net/ruby-romkan/index.html.en&gt;</code>_, originally authored by Satoru Takabayashi and <code>ported &lt;http://lilyx.net/python-romkan/&gt;</code>_ by Masato Hagiwara.</p>
+
+<p><code>python-romkan &lt;https://github.com/soimort/python-romkan&gt;</code>_ works on Python 2 and Python 3. It handles both Katakana (片仮名) and Hiragana (平仮名) with the Hepburn (ヘボン式) romanization system, as well as the modern Kunrei-shiki (訓令式) romanization system.</p>
+
+<p>Project homepage: <a href="https://github.com/soimort/python-romkan">https://github.com/soimort/python-romkan</a></p>
+
+<h2>Installation</h2>
+
+<h1>) Install via <code>Pip &lt;http://www.pip-installer.org/&gt;</code>_::</h1>
+
+<pre><code>$ pip install romkan
+</code></pre>
+
+<h1>) Install via <code>EasyInstall &lt;http://pypi.python.org/pypi/setuptools&gt;</code>_::</h1>
+
+<pre><code>$ easy_install romkan
+</code></pre>
+
+<h1>) Install from Git::</h1>
+
+<pre><code>$ git clone git://github.com/soimort/python-romkan.git
+
+$ ninja install
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Python 3.x::</p>
+
+<pre><code>$ python
+&gt;&gt;&gt; import romkan
+&gt;&gt;&gt; print(romkan.to_roma("にんじゃ"))
+ninja
+&gt;&gt;&gt; print(romkan.to_hepburn("にんじゃ"))
+ninja
+&gt;&gt;&gt; print(romkan.to_kunrei("にんじゃ"))
+ninzya
+&gt;&gt;&gt; print(romkan.to_hiragana("ninja"))
+にんじゃ
+&gt;&gt;&gt; print(romkan.to_katakana("ninja"))
+ニンジャ
+</code></pre>
+
+<p>Python 2.x::</p>
+
+<pre><code>$ python2
+&gt;&gt;&gt; import romkan
+&gt;&gt;&gt; print romkan.to_roma(u"にんじゃ")
+ninja
+&gt;&gt;&gt; print romkan.to_hepburn(u"にんじゃ")
+ninja
+&gt;&gt;&gt; print romkan.to_kunrei(u"にんじゃ")
+ninzya
+&gt;&gt;&gt; print romkan.to_hiragana("ninja")
+にんじゃ
+&gt;&gt;&gt; print romkan.to_katakana("ninja")
+ニンジャ
+</code></pre>
+
+<h2>API Reference</h2>
+
+<ul>
+<li><strong>to_katakana(string)</strong></li>
+</ul><p>Convert a Romaji (ローマ字) to a Katakana (片仮名).</p>
+
+<ul>
+<li><strong>to_hiragana(string)</strong></li>
+</ul><p>Convert a Romaji (ローマ字) to a Hiragana (平仮名).</p>
+
+<ul>
+<li><strong>to_kana(string)</strong></li>
+</ul><p>Convert a Romaji (ローマ字) to a Katakana (片仮名). (same as <em>to_katakana</em>)</p>
+
+<ul>
+<li><strong>to_hepburn(string)</strong></li>
+</ul><p>Convert a Kana (仮名) or a Kunrei-shiki Romaji (訓令式ローマ字) to a Hepburn Romaji (ヘボン式ローマ字).</p>
+
+<ul>
+<li><strong>to_kunrei(string)</strong></li>
+</ul><p>Convert a Kana (仮名) or a Hepburn Romaji (ヘボン式ローマ字) to a Kunrei-shiki Romaji (訓令式ローマ字).</p>
+
+<ul>
+<li><strong>to_roma(string)</strong></li>
+</ul><p>Convert a Kana (仮名) to a Hepburn Romaji (ヘボン式ローマ字).</p>
+
+<h2>License</h2>
+
+<p><code>python-romkan &lt;https://github.com/soimort/python-romkan&gt;</code>_ is licensed under the <code>BSD license &lt;https://raw.github.com/soimort/python-romkan/master/LICENSE&gt;</code>_.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
