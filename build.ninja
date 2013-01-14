@@ -4,7 +4,7 @@ setup2 = python2 setup.py
 build none: phony
 
 rule clean
-    command = rm -fr build/ dist/ *.egg-info/
+    command = (zenity --question; rm -fr build/ dist/ *.egg-info/; find . | grep __pycache__ | xargs rm -fr)
 
 rule build
     command = $setup build
@@ -25,7 +25,7 @@ rule test
     command = $setup test -s tests
 
 rule release
-    command = (zenity --warning; $setup sdist bdist_egg upload; $setup2 sdist bdist_egg upload)
+    command = (zenity --question; $setup sdist bdist_egg upload; $setup2 sdist bdist_egg upload)
 
 build clean: clean
 build build: build
