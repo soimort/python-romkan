@@ -4,8 +4,8 @@
     
     "author": "Mort Yao",
     "author_email": "mort.yao@gmail.com",
-    "url": "https://github.com/soimort/python-romkan",
-    "license": "MIT",
+    "url": "http://www.soimort.org/python-romkan/",
+    "license": "BSD",
     
     "description": "A Romaji/Kana conversion library",
     "keywords": "japanese romaji kana",
