@@ -2,6 +2,15 @@
 
 import unittest
 
+import sys
+import os
+
+# make sure to import romkan from ../romkan directory relative to this
+# file
+sys.path.insert(0,
+               (os.path.dirname(
+                    os.path.dirname(
+                        os.path.abspath(__file__)))))
 from romkan import *
 
 class RomkanTestCase(unittest.TestCase):
@@ -137,3 +146,6 @@ class RomkanTestCase(unittest.TestCase):
         assert sorted(expand_consonant("sh")) == ["sha", "she", "shi", "sho", "shu"]
         assert sorted(expand_consonant("sy")) == ["sya", "sye", "syo", "syu"]
         assert sorted(expand_consonant("ch")) == ["cha", "che", "chi", "cho", "chu"]
+
+if __name__ == '__main__':
+    unittest.main()
