@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -100,12 +101,11 @@ class RomkanTestCase(unittest.TestCase):
         assert to_hepburn("KANNZI") == "kanji"
         assert to_hepburn("TIE") == "chie"
         
-        assert to_hepburn("カンジ") == "kanji"
-        assert to_hepburn("チエ") == "chie"
+        assert to_hepburn(u"カンジ") == "kanji"
+        assert to_hepburn(u"チエ") == "chie"
         
-        assert to_hepburn("かんじ") == "kanji"
-        assert to_hepburn("ちえ") == "chie"
-        
+        assert to_hepburn(u"かんじ") == "kanji"
+        assert to_hepburn(u"ちえ") == "chie"
     def test_to_kunrei(self):
         assert to_kunrei("kanji") == "kanzi"
         assert to_kunrei("chie") == "tie"
@@ -113,12 +113,11 @@ class RomkanTestCase(unittest.TestCase):
         assert to_kunrei("KANJI") == "kanzi"
         assert to_kunrei("CHIE") == "tie"
         
-        assert to_kunrei("カンジ") == "kanzi"
-        assert to_kunrei("チエ") == "tie"
+        assert to_kunrei(u"カンジ") == "kanzi"
+        assert to_kunrei(u"チエ") == "tie"
         
-        assert to_kunrei("かんじ") == "kanzi"
-        assert to_kunrei("ちえ") == "tie"
-        
+        assert to_kunrei(u"かんじ") == "kanzi"
+        assert to_kunrei(u"ちえ") == "tie"
     def test_to_roma(self):
         assert to_roma(u"カンジ") == "kanji"
         assert to_roma(u"チャウ") == "chau"
