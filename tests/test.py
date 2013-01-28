@@ -106,6 +106,10 @@ class RomkanTestCase(unittest.TestCase):
         
         assert to_hepburn(u"かんじ") == "kanji"
         assert to_hepburn(u"ちえ") == "chie"
+
+        assert to_hepburn(u"しゃしん") == "syasin"
+        assert to_hepburn(u"しゅっしょう") == "syussyou"
+
     def test_to_kunrei(self):
         assert to_kunrei("kanji") == "kanzi"
         assert to_kunrei("chie") == "tie"
@@ -118,6 +122,10 @@ class RomkanTestCase(unittest.TestCase):
         
         assert to_kunrei(u"かんじ") == "kanzi"
         assert to_kunrei(u"ちえ") == "tie"
+
+        assert to_hepburn(u"しゃしん") == "shashin"
+        assert to_hepburn(u"しゅっしょう") == "shusshou"
+
     def test_to_roma(self):
         assert to_roma(u"カンジ") == "kanji"
         assert to_roma(u"チャウ") == "chau"
