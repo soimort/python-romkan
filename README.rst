@@ -28,7 +28,8 @@ Installation
 
     $ git clone git://github.com/soimort/python-romkan.git
     
-    $ ninja install
+    $ ninja
+    $ sudo ninja install
 
 
 

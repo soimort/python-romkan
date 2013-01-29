@@ -5,3 +5,5 @@
 *.py[cod]
 
 .ninja_log
+
+/_/

@@ -3,7 +3,6 @@
 
 from .version import __version__
 
-
 import re
 from functools import cmp_to_key
 
@@ -47,7 +46,7 @@ KUNREITAB = u"""ァ       xa      ア       a       ィ       xi      イ       
 ッギュ     ggyu    ッギョ     ggyo    ック      kku     ッグ      ggu 
 ッケ      kke     ッゲ      gge     ッコ      kko     ッゴ      ggo     ッサ      ssa 
 ッザ      zza     ッシ      ssi     ッシャ     ssya 
-ッシュ     ssyu    ッショ     ssho    ッシェ     ssye
+ッシュ     ssyu    ッショ     ssyo    ッシェ     ssye
 ッジ      zzi     ッジャ     zzya    ッジュ     zzyu    ッジョ     zzyo
 ッス      ssu     ッズ      zzu     ッセ      sse     ッゼ      zze     ッソ      sso 
 ッゾ      zzo     ッタ      tta     ッダ      dda     ッチ      tti     ッティ  tti
@@ -125,7 +124,7 @@ KUNREITAB_H = u"""ぁ      xa      あ      a      ぃ      xi      い      i  
 っぎゅ      ggyu      っぎょ      ggyo      っく      kku      っぐ      ggu 
 っけ      kke      っげ      gge      っこ      kko      っご      ggo      っさ      ssa 
 っざ      zza      っし      ssi      っしゃ      ssya 
-っしゅ      ssyu      っしょ      ssho 
+っしゅ      ssyu      っしょ      ssyo 
 っじ      zzi      っじゃ      zzya      っじゅ      zzyu      っじょ      zzyo 
 っす      ssu      っず      zzu      っせ      sse      っぜ      zze      っそ      sso 
 っぞ      zzo      った      tta      っだ      dda      っち      tti 
@@ -425,64 +424,126 @@ TO_HEPBURN_H.update( {'ti': 'chi' })
 
 
 def normalize_double_n(str):
+    """
+    Normalize double n.
+    """
+    
+    # Replace double n with n'
     str = re.sub("nn", "n'", str)
+    # Remove unnecessary apostrophes
     str = re.sub("n'(?=[^aiueoyn]|$)", "n", str)
+    
     return str
 
 def to_katakana(str):
+    """
+    Convert a Romaji (ローマ字) to a Katakana (片仮名).
+    """
+    
     str = str.lower()
-    tmp = normalize_double_n(str)
-    tmp = ROMPAT.sub(lambda x: ROMKAN[x.group(0)], tmp)
+    str = normalize_double_n(str)
+    
+    tmp = ROMPAT.sub(lambda x: ROMKAN[x.group(0)], str)
     return tmp
 
 def to_hiragana(str):
+    """
+    Convert a Romaji (ローマ字) to a Hiragana (平仮名).
+    """
+    
     str = str.lower()
-    tmp = normalize_double_n(str)
-    tmp = ROMPAT_H.sub(lambda x: ROMKAN_H[x.group(0)], tmp)
+    str = normalize_double_n(str)
+    
+    tmp = ROMPAT_H.sub(lambda x: ROMKAN_H[x.group(0)], str)
     return tmp
 
 def to_kana(str):
+    """
+    Convert a Romaji (ローマ字) to a Katakana (片仮名). (same as to_katakana)
+    """
+    
     return to_katakana(str)
 
 def to_hepburn(str):
-    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], str)
+    """
+    Convert a Kana (仮名) or a Kunrei-shiki Romaji (訓令式ローマ字) to a Hepburn Romaji (ヘボン式ローマ字).
+    """
+    
+    tmp = str
+    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], tmp)
     tmp = KANPAT_H.sub(lambda x: KANROM_H[x.group(0)], tmp)
+    
+    # Remove unnecessary apostrophes
     tmp = re.sub("n'(?=[^aeiuoyn]|$)", "n", tmp)
-    if tmp != str:
+    
+    # If unmodified, it's a Kunrei-shiki Romaji -- convert it to a Hepburn Romaji
+    if tmp == str:
+        tmp = tmp.lower()
         tmp = normalize_double_n(tmp)
-    else:
-        str = str.lower()
-        tmp = normalize_double_n(str)
-    tmp = KUNPAT.sub(lambda x: TO_HEPBURN[x.group(0)], tmp)
+        tmp = KUNPAT.sub(lambda x: TO_HEPBURN[x.group(0)], tmp)
+    
     return tmp
 
 def to_kunrei(str):
-    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], str)
+    """
+    Convert a Kana (仮名) or a Hepburn Romaji (ヘボン式ローマ字) to a Kunrei-shiki Romaji (訓令式ローマ字).
+    """
+    
+    tmp = str
+    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], tmp)
     tmp = KANPAT_H.sub(lambda x: KANROM_H[x.group(0)], tmp)
+    
+    # Remove unnecessary apostrophes
     tmp = re.sub("n'(?=[^aeiuoyn]|$)", "n", tmp)
-    if tmp != str:
-        tmp = normalize_double_n(tmp)
-    else:
-        str = str.lower()
-        tmp = normalize_double_n(str)
+    
+    # If unmodified, it's a Hepburn Romaji Romaji -- convert it to a Kunrei-shiki Romaji
+    # If modified, it's also a Hepburn Romaji Romaji -- convert it to a Kunrei-shiki Romaji
+    tmp = tmp.lower()
+    tmp = normalize_double_n(tmp)
     tmp = HEPPAT.sub(lambda x: TO_KUNREI[x.group(0)], tmp)
+    
     return tmp
 
 def to_roma(str):
-    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], str)
+    """
+    Convert a Kana (仮名) to a Hepburn Romaji (ヘボン式ローマ字).
+    """
+    
+    tmp = str
+    tmp = KANPAT.sub(lambda x: KANROM[x.group(0)], tmp)
     tmp = KANPAT_H.sub(lambda x: KANROM_H[x.group(0)], tmp)
+    
+    # Remove unnecessary apostrophes
     tmp = re.sub("n'(?=[^aeiuoyn]|$)", "n", tmp)
+    
     return tmp
 
 def is_consonant(str):
+    """
+    Return a MatchObject if a Latin letter is a consonant in Japanese.
+    Return None otherwise.
+    """
+    
     str = str.lower()
+    
     return re.match("[ckgszjtdhfpbmyrwxn]", str)
 
 def is_vowel(str):
+    """
+    Return a MatchObject if a Latin letter is a vowel in Japanese.
+    Return None otherwise.
+    """
+    
     str = str.lower()
+    
     return re.match("[aeiou]", str)
 
-# `z' => (za ze zi zo zu)
 def expand_consonant(str):
+    """
+    Expand consonant to its related moras.
+    Example: 'sh' => ['sha', 'she', 'shi', 'sho', 'shu']
+    """
+    
     str = str.lower()
-    return [x for x in ROMKAN.keys() if re.match("^%s.$"%str, x)]
+    
+    return sorted([mora for mora in ROMKAN.keys() if re.match("^%s.$" % str, mora)])
