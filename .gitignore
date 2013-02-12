@@ -1,9 +1,8 @@
 /build/
 /dist/
-/*.egg-info/
-
+/MANIFEST
+*.egg-info/
 *.py[cod]
 
+_*/
 .ninja_log
-
-/_/
