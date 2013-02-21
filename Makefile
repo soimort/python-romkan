@@ -1,5 +1,4 @@
-SETUP = python3 setup.py
-SETUP2 = python2 setup.py
+SETUP = ./setup.py
 
 .PHONY: default clean build sdist bdist bdist_egg install release
 
@@ -19,20 +18,16 @@ build:
 
 sdist:
 	$(SETUP) sdist
-	$(SETUP2) sdist
 
 bdist:
 	$(SETUP) bdist
 
 bdist_egg:
 	$(SETUP) bdist_egg
-	$(SETUP2) bdist_egg
 
 install: bdist_egg
 	sudo $(SETUP) install
-	sudo $(SETUP2) install
 
 release:
 	zenity --question
 	$(SETUP) sdist bdist_egg upload
-	$(SETUP2) bdist_egg upload
