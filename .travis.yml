@@ -1,10 +1,8 @@
 # https://travis-ci.org/soimort/python-romkan
 language: python
 python:
-  - "2.5"
-  - "2.6"
+  - "3.3"
+  - "3.2"
   - "2.7"
   - "pypy"
-  - "3.2"
-  - "3.3"
 script: make test
