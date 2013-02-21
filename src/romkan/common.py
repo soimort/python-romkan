@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from .version import __version__
 
@@ -19,7 +20,7 @@ from functools import cmp_to_key
 
 # This table is imported from KAKASI <http://kakasi.namazu.org/> and modified.
 
-KUNREITAB = u"""ァ       xa      ア       a       ィ       xi      イ       i       ゥ       xu
+KUNREITAB = """ァ       xa      ア       a       ィ       xi      イ       i       ゥ       xu
 ウ       u       ヴ       vu      ヴァ      va      ヴィ      vi      ヴェ      ve
 ヴォ      vo      ェ       xe      エ       e       ォ       xo      オ       o 
 
@@ -99,7 +100,7 @@ KUNREITAB = u"""ァ       xa      ア       a       ィ       xi      イ       
 ジェ      zye
 """
 
-KUNREITAB_H = u"""ぁ      xa      あ      a      ぃ      xi      い      i      ぅ      xu
+KUNREITAB_H = """ぁ      xa      あ      a      ぃ      xi      い      i      ぅ      xu
 う      u      う゛      vu      う゛ぁ      va      う゛ぃ      vi       う゛ぇ      ve
 う゛ぉ      vo      ぇ      xe      え      e      ぉ      xo      お      o 
 
@@ -175,7 +176,7 @@ KUNREITAB_H = u"""ぁ      xa      あ      a      ぃ      xi      い      i  
 じぇ      zye
 """
 
-HEPBURNTAB = u"""ァ      xa      ア       a       ィ       xi      イ       i       ゥ       xu
+HEPBURNTAB = """ァ      xa      ア       a       ィ       xi      イ       i       ゥ       xu
 ウ       u       ヴ       vu      ヴァ      va      ヴィ      vi      ヴェ      ve
 ヴォ      vo      ェ       xe      エ       e       ォ       xo      オ       o
         
@@ -256,7 +257,7 @@ HEPBURNTAB = u"""ァ      xa      ア       a       ィ       xi      イ       
 ジェ      je
 """
 
-HEPBURNTAB_H = u"""ぁ      xa      あ      a      ぃ      xi      い      i      ぅ      xu
+HEPBURNTAB_H = """ぁ      xa      あ      a      ぃ      xi      い      i      ぅ      xu
 う      u      う゛      vu      う゛ぁ      va      う゛ぃ      vi      う゛ぇ      ve
 う゛ぉ      vo      ぇ      xe      え      e      ぉ      xo      お      o
 
@@ -353,8 +354,8 @@ for pair in pairs(re.split("\s+", KUNREITAB + HEPBURNTAB)):
 # wo -> ヲ, but ヲ/ウォ -> wo
 # du -> ヅ, but ヅ/ドゥ -> du
 # we -> ウェ, ウェ -> we
-ROMKAN.update( {"du": u"ヅ", "di": u"ヂ", "fu": u"フ", "ti": u"チ",
-                "wi": u"ウィ", "we": u"ウェ", "wo": u"ヲ" } )
+ROMKAN.update( {"du": "ヅ", "di": "ヂ", "fu": "フ", "ti": "チ",
+                "wi": "ウィ", "we": "ウェ", "wo": "ヲ" } )
 
 # Sort in long order so that a longer Romaji sequence precedes.
 
@@ -362,13 +363,13 @@ _len_cmp = lambda x: -len(x)
 ROMPAT = re.compile("|".join(sorted(ROMKAN.keys(), key=_len_cmp)) )
 
 _kanpat_cmp = lambda x, y: (len(y) > len(x)) - (len(y) < len(x)) or (len(KANROM[x]) > len(KANROM[x])) - (len(KANROM[x]) < len(KANROM[x]))
-KANPAT = re.compile( u"|".join(sorted(KANROM.keys(), key=cmp_to_key(_kanpat_cmp))))
+KANPAT = re.compile("|".join(sorted(KANROM.keys(), key=cmp_to_key(_kanpat_cmp))))
 
 KUNREI = [y for (x, y) in pairs(re.split("\s+", KUNREITAB)) ]
 HEPBURN = [y for (x, y) in pairs(re.split("\s+", HEPBURNTAB) )]
 
-KUNPAT = re.compile( u"|".join(sorted(KUNREI, key=_len_cmp)) )
-HEPPAT = re.compile( u"|".join(sorted(HEPBURN, key=_len_cmp)) )
+KUNPAT = re.compile("|".join(sorted(KUNREI, key=_len_cmp)) )
+HEPPAT = re.compile("|".join(sorted(HEPBURN, key=_len_cmp)) )
 
 TO_HEPBURN = {}
 TO_KUNREI = {}
@@ -395,8 +396,8 @@ for pair in pairs(re.split("\s+", KUNREITAB_H + HEPBURNTAB_H)):
 # wo -> ヲ, but ヲ/ウォ -> wo
 # du -> ヅ, but ヅ/ドゥ -> du
 # we -> ウェ, ウェ -> we
-ROMKAN_H.update( {"du": u"づ", "di": u"ぢ", "fu": u"ふ", "ti": u"ち",
-                "wi": u"うぃ", "we": u"うぇ", "wo": u"を" } )
+ROMKAN_H.update( {"du": "づ", "di": "ぢ", "fu": "ふ", "ti": "ち",
+                "wi": "うぃ", "we": "うぇ", "wo": "を" } )
 
 # Sort in long order so that a longer Romaji sequence precedes.
 
@@ -404,13 +405,13 @@ _len_cmp = lambda x: -len(x)
 ROMPAT_H = re.compile("|".join(sorted(ROMKAN_H.keys(), key=_len_cmp)) )
 
 _kanpat_cmp = lambda x, y: (len(y) > len(x)) - (len(y) < len(x)) or (len(KANROM_H[x]) > len(KANROM_H[x])) - (len(KANROM_H[x]) < len(KANROM_H[x]))
-KANPAT_H = re.compile( u"|".join(sorted(KANROM_H.keys(), key=cmp_to_key(_kanpat_cmp))))
+KANPAT_H = re.compile("|".join(sorted(KANROM_H.keys(), key=cmp_to_key(_kanpat_cmp))))
 
 KUNREI_H = [y for (x, y) in pairs(re.split("\s+", KUNREITAB_H)) ]
 HEPBURN_H = [y for (x, y) in pairs(re.split("\s+", HEPBURNTAB_H) )]
 
-KUNPAT_H = re.compile( u"|".join(sorted(KUNREI_H, key=_len_cmp)) )
-HEPPAT_H = re.compile( u"|".join(sorted(HEPBURN_H, key=_len_cmp)) )
+KUNPAT_H = re.compile("|".join(sorted(KUNREI_H, key=_len_cmp)) )
+HEPPAT_H = re.compile("|".join(sorted(HEPBURN_H, key=_len_cmp)) )
 
 TO_HEPBURN_H = {}
 TO_KUNREI_H = {}
