@@ -5,7 +5,32 @@ from __future__ import unicode_literals
 from .version import __version__
 
 import re
-from functools import cmp_to_key
+try:
+    from functools import cmp_to_key
+except ImportError:
+    # for python < 3.2; nicked from python 3.2
+    def cmp_to_key(mycmp):
+        """Convert a cmp= function into a key= function"""
+        class K(object):
+            __slots__ = ['obj']
+            def __init__(self, obj):
+                self.obj = obj
+            def __lt__(self, other):
+                return mycmp(self.obj, other.obj) < 0
+            def __gt__(self, other):
+                return mycmp(self.obj, other.obj) > 0
+            def __eq__(self, other):
+                return mycmp(self.obj, other.obj) == 0
+            def __le__(self, other):
+                return mycmp(self.obj, other.obj) <= 0
+            def __ge__(self, other):
+                return mycmp(self.obj, other.obj) >= 0
+            def __ne__(self, other):
+                return mycmp(self.obj, other.obj) != 0
+            __hash__ = None
+        return K
+
+
 
 #
 # Ruby/Romkan - a Romaji <-> Kana conversion library for Ruby.
