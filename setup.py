@@ -5,7 +5,12 @@ PACKAGE_NAME = 'romkan'
 
 PROJ_METADATA = '%s.json' % PROJ_NAME
 
-import os, json, imp
+import os, imp
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 here = os.path.abspath(os.path.dirname(__file__))
 proj_info = json.loads(open(os.path.join(here, PROJ_METADATA)).read())
 README = open(os.path.join(here, 'README.rst')).read()
