@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2.1
+-----
+
+*Date: 2013-02-26*
+
+* Improved Python compatibility (2.6, <=3.1).
+
 0.2.0
 -----
 
