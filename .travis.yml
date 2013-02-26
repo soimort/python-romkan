@@ -5,8 +5,5 @@ python:
   - "3.2"
   - "2.7"
   - "2.6"
-  - "2.5"
   - "pypy"
-install:
-  - if [ "`python -c 'import sys; print(sys.version_info[0:2])'`" = "(2, 5)" ]; then pip install -r requirements.txt --use-mirrors; fi
 script: make test
