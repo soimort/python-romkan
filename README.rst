@@ -5,11 +5,13 @@ python-romkan
 
 It is the Pythonic port of `Ruby/Romkan <http://0xcc.net/ruby-romkan/index.html.en>`_, originally authored by Satoru Takabayashi and `ported <http://lilyx.net/python-romkan/>`_ by Masato Hagiwara.
 
-`python-romkan <https://github.com/soimort/python-romkan>`_ works on Python 2 and Python 3 (fully tested on **Python 2.7**, **3.2**, **3.3** and **PyPy**). It handles both Katakana (片仮名) and Hiragana (平仮名) with the Hepburn (ヘボン式) romanization system, as well as the modern Kunrei-shiki (訓令式) romanization system.
+`python-romkan <https://github.com/soimort/python-romkan>`_ works on Python 2 and Python 3 (fully tested on **Python 2.6**, **Python 2.7**, **3.2**, **3.3** and **PyPy**). It handles both Katakana (片仮名) and Hiragana (平仮名) with the Hepburn (ヘボン式) romanization system, as well as the modern Kunrei-shiki (訓令式) romanization system.
 
 Project homepage: http://www.soimort.org/python-romkan
 
 Fork me on GitHub: https://github.com/soimort/python-romkan
+
+.. image:: https://api.travis-ci.org/soimort/python-romkan.png
 
 
 
