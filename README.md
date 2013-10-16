@@ -1,4 +1,6 @@
-# python-romkan [![Build Status](https://api.travis-ci.org/soimort/python-romkan.png)](https://travis-ci.org/soimort/python-romkan)
+# python-romkan
+
+[![Build Status](https://api.travis-ci.org/soimort/python-romkan.png)](https://travis-ci.org/soimort/python-romkan) [![PyPI version](https://badge.fury.io/py/romkan.png)](http://badge.fury.io/py/romkan)
 
 [python-romkan](https://github.com/soimort/python-romkan) is a Romaji/Kana conversion library for Python, which is used to convert a Japanese Romaji (ローマ字) string to a Japanese Kana (仮名) string or vice versa.
 
