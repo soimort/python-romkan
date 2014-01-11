@@ -1,234 +1,63 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
-import unittest
-
-import sys
 import os
+import unittest
+from ddt import ddt, data
+from unicodecsv import UnicodeReader
+from romkan import to_roma, to_kunrei, to_hepburn, to_kana, to_hiragana, to_katakana
+from romkan import is_vowel, is_consonant, expand_consonant
 
-# make sure to import romkan from ../romkan directory relative to this
-# file
-sys.path.insert(0,
-               (os.path.dirname(
-                    os.path.dirname(
-                        os.path.abspath(__file__)))))
-from romkan import *
+
+def open_csv(path):
+    fh = open(path, 'r')
+    ucsv = UnicodeReader(fh, delimiter=str('	'))
+    return ucsv
+
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+TO_ROMA = os.path.join(HERE, 'to_roma.csv')
+TO_KUNREI = os.path.join(HERE, 'to_kunrei.csv')
+TO_HEPBURN = os.path.join(HERE, 'to_hepburn.csv')
+TO_KANA = os.path.join(HERE, 'to_kana.csv')
+TO_HIRAGANA = os.path.join(HERE, 'to_hiragana.csv')
+TO_KATAKANA = os.path.join(HERE, 'to_katakana.csv')
+
+
+@ddt
+class ConversionTestCase(unittest.TestCase):
+
+    @data(*open_csv(TO_ROMA))
+    def test_to_roma(self, row):
+        in_text, expected = row
+        self.assertEquals(to_roma(in_text), expected)
+
+    @data(*open_csv(TO_KUNREI))
+    def test_to_kunrei(self, row):
+        in_text, expected = row
+        self.assertEquals(to_kunrei(in_text), expected)
+
+    @data(*open_csv(TO_HEPBURN))
+    def test_to_hepburn(self, row):
+        in_text, expected = row
+        self.assertEquals(to_hepburn(in_text), expected)
+
+    @data(*open_csv(TO_KANA))
+    def test_to_kana(self, row):
+        in_text, expected = row
+        self.assertEquals(to_kana(in_text), expected)
+
+    @data(*open_csv(TO_HIRAGANA))
+    def test_to_hiragana(self, row):
+        in_text, expected = row
+        self.assertEquals(to_hiragana(in_text), expected)
+
+    @data(*open_csv(TO_KATAKANA))
+    def test_to_katakana(self, row):
+        in_text, expected = row
+        self.assertEquals(to_katakana(in_text), expected)
+
 
 class RomkanTestCase(unittest.TestCase):
-    
-    def test_to_katakana(self):
-        self.assertEqual(to_katakana("kanji"),
-                         "カンジ")
-        self.assertEqual(to_katakana("kanzi"),
-                         "カンジ")
-        self.assertEqual(to_katakana("kannji"),
-                         "カンジ")
-        self.assertEqual(to_katakana("chie"),
-                         "チエ")
-        self.assertEqual(to_katakana("tie"),
-                         "チエ")
-        self.assertEqual(to_katakana("kyouju"),
-                         "キョウジュ")
-        self.assertEqual(to_katakana("syuukyou"),
-                         "シュウキョウ")
-        self.assertEqual(to_katakana("shuukyou"),
-                         "シュウキョウ")
-        self.assertEqual(to_katakana("saichuu"),
-                         "サイチュウ")
-        self.assertEqual(to_katakana("saityuu"),
-                         "サイチュウ")
-        self.assertEqual(to_katakana("cheri-"),
-                         "チェリー")
-        self.assertEqual(to_katakana("tyeri-"),
-                         "チェリー")
-        self.assertEqual(to_katakana("shinrai"),
-                         "シンライ")
-        self.assertEqual(to_katakana("sinrai"),
-                         "シンライ")
-        self.assertEqual(to_katakana("hannnou"),
-                         "ハンノウ")
-        self.assertEqual(to_katakana("han'nou"),
-                         "ハンノウ")
-        
-        self.assertEqual(to_katakana("wo"),
-                         "ヲ")
-        self.assertEqual(to_katakana("we"),
-                         "ウェ")
-        self.assertEqual(to_katakana("du"),
-                         "ヅ")
-        self.assertEqual(to_katakana("she"),
-                         "シェ")
-        self.assertEqual(to_katakana("di"),
-                         "ヂ")
-        self.assertEqual(to_katakana("fu"),
-                         "フ")
-        self.assertEqual(to_katakana("ti"),
-                         "チ")
-        self.assertEqual(to_katakana("wi"),
-                         "ウィ")
-        
-        self.assertEqual(to_katakana("je"),
-                         "ジェ")
-        self.assertEqual(to_katakana("e-jento"),
-                         "エージェント")
-        
-    def test_to_hiragana(self):
-        self.assertEqual(to_hiragana("kanji"),
-                         "かんじ")
-        self.assertEqual(to_hiragana("kanzi"),
-                         "かんじ")
-        self.assertEqual(to_hiragana("kannji"),
-                         "かんじ")
-        self.assertEqual(to_hiragana("chie"),
-                         "ちえ")
-        self.assertEqual(to_hiragana("tie"),
-                         "ちえ")
-        self.assertEqual(to_hiragana("kyouju"),
-                         "きょうじゅ")
-        self.assertEqual(to_hiragana("syuukyou"),
-                         "しゅうきょう")
-        self.assertEqual(to_hiragana("shuukyou"),
-                         "しゅうきょう")
-        self.assertEqual(to_hiragana("saichuu"),
-                         "さいちゅう")
-        self.assertEqual(to_hiragana("saityuu"),
-                         "さいちゅう")
-        self.assertEqual(to_hiragana("cheri-"),
-                         "ちぇりー")
-        self.assertEqual(to_hiragana("tyeri-"),
-                         "ちぇりー")
-        self.assertEqual(to_hiragana("shinrai"),
-                         "しんらい")
-        self.assertEqual(to_hiragana("sinrai"),
-                         "しんらい")
-        self.assertEqual(to_hiragana("hannnou"),
-                         "はんのう")
-        self.assertEqual(to_hiragana("han'nou"),
-                         "はんのう")
-        
-    def test_to_kana(self):
-        self.assertEqual(to_kana("kanji"),
-                         "カンジ")
-        self.assertEqual(to_kana("kanzi"),
-                         "カンジ")
-        self.assertEqual(to_kana("kannji"),
-                         "カンジ")
-        self.assertEqual(to_kana("chie"),
-                         "チエ")
-        self.assertEqual(to_kana("tie"),
-                         "チエ")
-        self.assertEqual(to_kana("kyouju"),
-                         "キョウジュ")
-        self.assertEqual(to_kana("syuukyou"),
-                         "シュウキョウ")
-        self.assertEqual(to_kana("shuukyou"),
-                         "シュウキョウ")
-        self.assertEqual(to_kana("saichuu"),
-                         "サイチュウ")
-        self.assertEqual(to_kana("saityuu"),
-                         "サイチュウ")
-        self.assertEqual(to_kana("cheri-"),
-                         "チェリー")
-        self.assertEqual(to_kana("tyeri-"),
-                         "チェリー")
-        self.assertEqual(to_kana("shinrai"),
-                         "シンライ")
-        self.assertEqual(to_kana("sinrai"),
-                         "シンライ")
-        self.assertEqual(to_kana("hannnou"),
-                         "ハンノウ")
-        self.assertEqual(to_kana("han'nou"),
-                         "ハンノウ")
-        
-        self.assertEqual(to_kana("wo"),
-                         "ヲ")
-        self.assertEqual(to_kana("we"),
-                         "ウェ")
-        self.assertEqual(to_kana("du"),
-                         "ヅ")
-        self.assertEqual(to_kana("she"),
-                         "シェ")
-        self.assertEqual(to_kana("di"),
-                         "ヂ")
-        self.assertEqual(to_kana("fu"),
-                         "フ")
-        self.assertEqual(to_kana("ti"),
-                         "チ")
-        self.assertEqual(to_kana("wi"),
-                         "ウィ")
-        
-        self.assertEqual(to_kana("je"),
-                         "ジェ")
-        self.assertEqual(to_kana("e-jento"),
-                         "エージェント")
-        
-    def test_to_hepburn(self):
-        self.assertEqual(to_hepburn("kannzi"),
-                         "kanji")
-        self.assertEqual(to_hepburn("tie"),
-                         "chie")
-        
-        self.assertEqual(to_hepburn("KANNZI"),
-                         "kanji")
-        self.assertEqual(to_hepburn("TIE"),
-                         "chie")
-        
-        self.assertEqual(to_hepburn("カンジ"),
-                         "kanji")
-        self.assertEqual(to_hepburn("チエ"),
-                         "chie")
-        
-        self.assertEqual(to_hepburn("かんじ"),
-                         "kanji")
-        self.assertEqual(to_hepburn("ちえ"),
-                         "chie")
-
-        self.assertEqual(to_hepburn("しゃしん"),
-                         "shashin")
-        self.assertEqual(to_hepburn("しゅっしょう"),
-                         "shusshou")
-        
-    def test_to_kunrei(self):
-        self.assertEqual(to_kunrei("kanji"),
-                         "kanzi")
-        self.assertEqual(to_kunrei("chie"),
-                         "tie")
-        
-        self.assertEqual(to_kunrei("KANJI"),
-                         "kanzi")
-        self.assertEqual(to_kunrei("CHIE"),
-                         "tie")
-        
-        self.assertEqual(to_kunrei("カンジ"),
-                         "kanzi")
-        self.assertEqual(to_kunrei("チエ"),
-                         "tie")
-        
-        self.assertEqual(to_kunrei("かんじ"),
-                         "kanzi")
-        self.assertEqual(to_kunrei("ちえ"),
-                         "tie")
-        
-        self.assertEqual(to_kunrei("しゃしん"),
-                         "syasin")
-        self.assertEqual(to_kunrei("しゅっしょう"),
-                         "syussyou")
-        
-    def test_to_roma(self):
-        self.assertEqual(to_roma("カンジ"),
-                         "kanji")
-        self.assertEqual(to_roma("チャウ"),
-                         "chau")
-        self.assertEqual(to_roma("ハンノウ"),
-                         "han'nou")
-        
-        self.assertEqual(to_roma("かんじ"),
-                         "kanji")
-        self.assertEqual(to_roma("ちゃう"),
-                         "chau")
-        self.assertEqual(to_roma("はんのう"),
-                         "han'nou")
         
     def test_is_consonant(self):
         assert not is_consonant("a")
