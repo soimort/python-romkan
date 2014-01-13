@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import os
 import unittest
 from ddt import ddt, data
@@ -56,6 +55,11 @@ class ConversionTestCase(unittest.TestCase):
         in_text, expected = row
         self.assertIn(to_katakana(in_text), expected)
 
+    @data(*list(get_cases_from_csv('hiragana', 'hiragana')))
+    def test_reversibility(self, row):
+        in_text, _ = row
+        self.assertEquals(to_hiragana(to_kunrei(in_text)), in_text)
+
 
 class RomkanTestCase(unittest.TestCase):
         
@@ -85,6 +89,7 @@ class RomkanTestCase(unittest.TestCase):
                          ["sya", "sye", "syo", "syu"])
         self.assertEqual(sorted(expand_consonant("ch")),
                          ["cha", "che", "chi", "cho", "chu"])
+
 
 if __name__ == '__main__':
     unittest.main()
