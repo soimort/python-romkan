@@ -56,6 +56,11 @@ class ConversionTestCase(unittest.TestCase):
         in_text, expected = row
         self.assertIn(to_katakana(in_text), expected)
 
+    @data(*list(get_cases_from_csv('hiragana', 'hiragana')))
+    def test_reversibility(self, row):
+        in_text, _ = row
+        self.assertEquals(to_hiragana(to_kunrei(in_text)), in_text)
+
 
 class RomkanTestCase(unittest.TestCase):
         
