@@ -15,7 +15,7 @@ SRC = os.path.join(HERE, 'src')
 
 
 proj_info = json.loads(open(os.path.join(HERE, PROJ_METADATA)).read())
-test_requirements = ['ddt>=0.5.0', 'unicodecsv>=0.9.4']
+test_requirements = ['ddt>=0.5.0', 'unicodecsv>=0.10.1']
 
 
 setup(
@@ -37,6 +37,7 @@ setup(
     
     test_suite = 'tests',
     tests_require = test_requirements,
+    dependency_links = ['https://github.com/jdunck/python-unicodecsv/zipball/master#egg=unicodecsv-0.10.1'],
     
     platforms = 'any',
     zip_safe = False,
