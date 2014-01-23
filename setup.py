@@ -1,19 +1,23 @@
 #!/usr/bin/env python
 
+import os, json, imp
+from setuptools import setup, find_packages
+
 PROJ_NAME = 'romkan'
 PACKAGE_NAME = 'romkan'
-
 PROJ_METADATA = '%s.json' % PROJ_NAME
 
-import os, json, imp
+HERE = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(HERE, 'README.rst')).read()
+CHANGELOG = open(os.path.join(HERE, 'CHANGELOG.rst')).read()
+VERSION = imp.load_source('version', os.path.join(HERE, 'src/%s/version.py' % PACKAGE_NAME)).__version__
+SRC = os.path.join(HERE, 'src')
 
-here = os.path.abspath(os.path.dirname(__file__))
-proj_info = json.loads(open(os.path.join(here, PROJ_METADATA)).read())
-README = open(os.path.join(here, 'README.rst')).read()
-CHANGELOG = open(os.path.join(here, 'CHANGELOG.rst')).read()
-VERSION = imp.load_source('version', os.path.join(here, 'src/%s/version.py' % PACKAGE_NAME)).__version__
 
-from setuptools import setup, find_packages
+proj_info = json.loads(open(os.path.join(HERE, PROJ_METADATA)).read())
+test_requirements = ['ddt>=0.5.0', 'unicodecsv>=0.10.1']
+
+
 setup(
     name = proj_info['name'],
     version = VERSION,
@@ -28,10 +32,12 @@ setup(
     
     long_description = README + '\n\n' + CHANGELOG,
     
-    packages = find_packages('src'),
-    package_dir = {'' : 'src'},
+    packages = find_packages(SRC),
+    package_dir = {'' : SRC},
     
     test_suite = 'tests',
+    tests_require = test_requirements,
+    dependency_links = ['https://github.com/jdunck/python-unicodecsv/zipball/master#egg=unicodecsv-0.10.1'],
     
     platforms = 'any',
     zip_safe = False,
