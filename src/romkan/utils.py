@@ -37,7 +37,7 @@ def is_katakana(text):
 
 
 def is_hiragana(text):
-    return all([c in katakana for c in text])
+    return all([c in hiragana for c in text])
 
 
 def is_kana(text):
