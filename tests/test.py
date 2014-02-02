@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
 
 import sys
 import os
@@ -14,7 +13,8 @@ sys.path.insert(0,
                     os.path.dirname(
                         os.path.abspath(__file__)))))
 from romkan import *
-
+from romkan.utils import expand_consonant, is_consonant, is_vowel
+import unittest
 class RomkanTestCase(unittest.TestCase):
     
     def test_to_katakana(self):
