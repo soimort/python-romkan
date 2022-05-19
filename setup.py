@@ -10,7 +10,7 @@ import os, json, importlib
 here = os.path.abspath(os.path.dirname(__file__))
 proj_info = json.loads(open(os.path.join(here, PROJ_METADATA)).read())
 README = open(os.path.join(here, "README.rst"), encoding="utf-8").read()
-CHANGELOG = open(os.path.join(here, 'CHANGELOG.rst')).read()
+CHANGELOG = open(os.path.join(here, "CHANGELOG.rst"), encoding="utf-8").read()
 VERSION = importlib.import_module(name="src.%s.version" % PACKAGE_NAME).__version__
 
 from setuptools import setup, find_packages
