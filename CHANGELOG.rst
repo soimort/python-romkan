@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2.2
+-----
+
+*Date: 2022-05-19*
+
+* Fix issues with setup
+
 0.2.1
 -----
 
